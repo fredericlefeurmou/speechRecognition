@@ -10,3 +10,22 @@ angular.module 'speechRecognitionApp'
   $scope.delete = (user) ->
     User.remove id: user._id
     _.remove $scope.users, user
+
+  $scope.createWord = (word) ->
+    $http.post '/api/words',
+      name: word
+    .success (res) ->
+      console.log 'word added'
+      $scope.words.push res
+
+  $scope.fetchAllWords = () ->
+    $http.get '/api/words'
+    .success (words) ->
+      console.log 'words retrieved'
+      console.log words
+      $scope.words = words
+
+  $scope.deleteWord = (wordId) ->
+    $http.delete '/api/words/' + wordId
+    .success (res) ->
+      console.log 'word deleted'
